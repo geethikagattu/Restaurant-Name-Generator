@@ -12,14 +12,14 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     temperature=0.6,
+    google_api_key=GOOGLE_API_KEY
+)
 
-# Prompt for restaurant name
 name_prompt = PromptTemplate(
     input_variables=["cuisine"],
     template="I want to open a restaurant for {cuisine} food. Suggest ONE fancy name only."
 )
 
-# Prompt for menu
 menu_prompt = PromptTemplate(
     input_variables=["restaurant_name"],
     template="Suggest a detailed menu for a restaurant named {restaurant_name}."
@@ -42,7 +42,3 @@ def generate_restaurant_name_and_items(cuisine):
         "restaurant_name": restaurant_name.strip(),
         "menu_items": menu_items.strip()
     }
-
-
-if __name__ == "__main__":
-    print(generate_restaurant_name_and_items("Italian"))
